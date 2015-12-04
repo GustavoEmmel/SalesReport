@@ -27,9 +27,9 @@ class WriteFile {
 		asort($this->salesmanSalesList);
 		$body .= "Worst salesman ever: ".key($this->salesmanSalesList)."\n";
 		
-		$this->filename = str_replace('.dat', '', $this->filename);
+		$this->filename = str_replace('.dat', '.done.dat', $this->filename);
 		
-		file_put_contents('./data/out/'.$this->filename.'.done.dat', $body);
+		file_put_contents('./data/out/'.$this->filename, $body);
 		
 	}
 

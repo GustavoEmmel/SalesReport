@@ -7,9 +7,9 @@ class SalesReport {
 	function __construct() {
 
 		$folder = "data/out/";
-		
+
 		$this->clearFiles($folder);
-		
+
 		$this->readFiles();
 
 	}
@@ -35,6 +35,7 @@ class SalesReport {
 				$customerList = array();
 				$c = 0;
 
+				$totalSale = 0;
 				$salesList = array();
 				$salesmanSalesList = array();
 
@@ -56,18 +57,21 @@ class SalesReport {
 
 						$totalSale = $this->calculateSales($linha);
 
-						$ind = $sale[3];
-
 						$salesList[$sale[1]] = $totalSale;
 
-						$salesmanSalesList[$ind] += $totalSale;
+						if (isset($salesmanSalesList[$sale[3]])) {
+							$salesmanSalesList[$sale[3]] += $totalSale;
+						} else {
+							$salesmanSalesList[$sale[3]] = $totalSale;
+						}
+
 					}
 
 				}
 
 				$Writer = new WriteFile($file, $customerList, $salesmanList, $salesList, $salesmanSalesList);
 				$Writer->write();
-	
+
 			}
 
 		}
@@ -123,5 +127,6 @@ class SalesReport {
 }
 
 $Report = new SalesReport($_REQUEST);
+
 ?>
 

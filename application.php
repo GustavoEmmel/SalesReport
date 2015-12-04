@@ -7,7 +7,12 @@ class Application {
 
 	function __construct() {
 
-		$this->searchFolder();
+		set_time_limit(0);
+		ignore_user_abort(true);
+		while(true) {
+			$this->searchFolder();
+			usleep(100000);
+		}
 
 	}
 
@@ -15,15 +20,13 @@ class Application {
 	{
 		$inPath 	= "data/in/";
 		$outPath 	= "data/out/";
-		
+
 		$inFiles 	= $this->readFolder($inPath);
 		$outFiles	= $this->readFolder($outPath);
-		
+
 		if($inFiles > $outFiles){
 			$SalesReport = new SalesReport();
 		}
-		
-		$this->searchFolder();
 
 	}
 
@@ -33,7 +36,7 @@ class Application {
 		$dir = dir($path);
 
 		$count = 0;
-		
+
 		while($file = $dir -> read()){
 
 			$ext = @pathinfo($path.$file, PATHINFO_EXTENSION);
@@ -44,14 +47,9 @@ class Application {
 
 		}
 		$dir -> close();
-		
+
 		return $count;
 	}
-
-
-
-
-
 
 }
 
